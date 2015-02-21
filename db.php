@@ -17,8 +17,8 @@ if ($conn->connect_error) {
 
 
 
-$id=$last_id;
-$admission_id=$id;
+$id=null;
+$admission_id=null;
 $type=null;
 $house_name=$_POST["hname"];
 $place1=$_POST["pl1"];
@@ -28,6 +28,7 @@ $district=$_POST["district"];
 $state=$_POST["state"];
 $pin=null;
 $admission_no=$_POST["admno"];
+$admission_id=$_POST["admno"];
 $name=$_POST["name"];
 $date_of_birth=$_POST["year"].'-'.$_POST["month"].'-'.$_POST["day"];
 $sex=$_POST["sex"];
@@ -92,14 +93,18 @@ $moccupation=$_POST["mocc"];
 $memail_address=$_POST["memail"];
 $mphone_no=$_POST["mpho"];
 
+$gname=$_POST["gname"];
+$goccupation=$_POST["gocc"];
+$gemail_address=$_POST["gemail"];
+$gphone_no=$_POST["gpho"];
 
 
 
 
-$sql = "INSERT INTO admissions (id,admission_no,name,date_of_birth,sex,caste,religion,naitivity,village,taluk,relation,blood_group,annual_income,student_mobile,student_email,date_of_admission, course_id,category_id,reservation_id,detail_id,transfercertificate_id,rollno,batch,semester,phone_no,class,regno,year_po)
-VALUES ('$id','$admission_no','$name','$date_of_birth','$sex','$caste','$religion','$naitivity','$village','$taluk','$relation','$blood_group','$annual_income',
+$sql = "INSERT INTO admissions (admission_no,name,date_of_birth,sex,caste,religion,naitivity,village,taluk,relation,blood_group,annual_income,student_mobile,student_email,date_of_admission, course_id,category_id,reservation_id,detail_id,transfercertificate_id,rollno,batch,semester,phone_no,class,regno,year_po)
+VALUES ('$admission_no','$name','$date_of_birth','$sex','$caste','$religion','$naitivity','$village','$taluk','$relation','$blood_group','$annual_income',
 '$student_mobile','$student_email','$date_of_admission','$course_id','$category_id','$reservation_id','$detail_id','$transfercertificate_id','$rollno','$batch',
-'$semester','$phone_no','$class','$regno','$year_po');";
+'$semester','$student_mobile','$class','$regno','$year_po');";
 
 if ($conn->query($sql) === TRUE) {
     $last_id = $conn->insert_id;
@@ -109,17 +114,31 @@ if ($conn->query($sql) === TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-$sql = "INSERT INTO addresses (id,admission_id,type,house_name,place1,place2,post_office,district,state,pin)
-VALUES ('$id','$admission_id','$type','$house_name','$place1','$place2','$post_office','$district','$state','$pin');";
+$sql = "INSERT INTO addresses (admission_id,type,house_name,place1,place2,post_office,district,state,pin)
+VALUES ('$admission_id',0,'$house_name','$place1','$place2','$post_office','$district','$state','$pin');";
+if ($conn->query($sql) === TRUE) {
+    echo "<br>New record created successfully in addresses.";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+$sql = "INSERT INTO addresses (admission_id,type,house_name,place1,place2,post_office,district,state,pin)
+VALUES ('$admission_id',1,'$phouse_name','$pplace1','$pplace2','$ppost_office','$pdistrict','$pstate','$pin');";
+if ($conn->query($sql) === TRUE) {
+    echo "<br>New record created successfully in addresses.";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+$sql = "INSERT INTO addresses (admission_id,type,house_name,place1,place2,post_office,district,state,pin)
+VALUES ('$admission_id',2,'$ghouse_name','$gplace1','$gplace2','$gpost_office','$gdistrict','$gstate','$pin');";
 if ($conn->query($sql) === TRUE) {
     echo "<br>New record created successfully in addresses.";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-$sql = "INSERT INTO details (id,previous_institution,register_no,tc_no,tc_date,entrance_roll_no,entrance_rank,qualifying_board,qualifying_exam,
+$sql = "INSERT INTO details (admission_id,previous_institution,register_no,tc_no,tc_date,entrance_roll_no,entrance_rank,qualifying_board,qualifying_exam,
 percentage,year_of_pass)
-VALUES ('$id','$previous_institution','$register_no','$tc_no','$tc_date','$entrance_roll_no','$entrance_rank','$qualifying_board','$qualifying_exam',
+VALUES ('$admission_no','$previous_institution','$register_no','$tc_no','$tc_date','$entrance_roll_no','$entrance_rank','$qualifying_board','$qualifying_exam',
 '$percentage','$year_of_pass');";
 if ($conn->query($sql) === TRUE) {
     echo "<br>New record created successfully in details.";
@@ -127,8 +146,22 @@ if ($conn->query($sql) === TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-$sql = "INSERT INTO relatives (id,admission_id,type,name,occupation,email_address,phone_no)
-VALUES ('$id','$admission_id','$type','$name','$occupation','$email_address','$phone_no');";
+$sql = "INSERT INTO relatives (admission_id,type,name,occupation,email_address,phone_no)
+VALUES ('$admission_no',0,'$fname','$foccupation','$femail_address','$fphone_no');";
+if ($conn->query($sql) === TRUE) {
+    echo "<br>New record created successfully in relatives.";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+$sql = "INSERT INTO relatives (admission_id,type,name,occupation,email_address,phone_no)
+VALUES ('$admission_no',1,'$mname','$moccupation','$memail_address','$mphone_no');";
+if ($conn->query($sql) === TRUE) {
+    echo "<br>New record created successfully in relatives.";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+$sql = "INSERT INTO relatives (admission_id,type,name,occupation,email_address,phone_no)
+VALUES ('$admission_no',2,'$gname','$goccupation','$gemail_address','$gphone_no');";
 if ($conn->query($sql) === TRUE) {
     echo "<br>New record created successfully in relatives.";
 } else {

@@ -21,6 +21,89 @@ $semailErr=$fnameErr=$femailErr="";
 $fphoErr=$mnameErr=$memailErr="";
 $mphoErr=$gnameErr=$gemailErr="";
 $gphoErr=$rankErr="";
+  function categorycheck($data)
+   {
+          switch($data)
+      {
+        case 0: return("GEN");
+		  break;
+        case 1: return("EZ");
+		  break;
+        case 2: return("MU");
+		  break;
+        case 3: return("BH");
+		  break;
+        case 4: return("LC");
+		  break;
+        case 5: return("BX");
+		  break;
+        case 6: return("SC");
+		  break;
+        case 7: return("ST");
+		  break;
+}
+    return("");
+   }
+  function reservation($data)
+   {
+      switch($data)
+      {
+        case 0: return("SM");
+		  break;
+        case 1: return("NRI");
+		  break;
+        case 2: return("EZ");
+		  break;
+        case 3: return("MU");
+		  break;
+        case 4: return("BH");
+		  break;
+        case 5: return("LC");
+		  break;
+        case 6: return("BX");
+		  break;
+        case 7: return("ST");
+		  break;
+        case 8: return("SC");
+		  break;
+        case 9: return("ST");
+		  break;
+
+}
+    return("");
+   }
+
+  function monthcheck($data)
+   { //echo $data;
+     switch($data)
+      {
+        case 01: return("January");
+		  break;
+        case 2: return("February");
+		  break;
+        case 3: return("March");
+		  break;
+        case 4: return("April");
+		  break;
+        case 5: return("May");
+		  break;
+        case 6: return("June");
+		  break;
+        case 7: return("July");
+		  break;
+        case 8: return("August");
+		  break;
+        case 9: return("September");
+		  break;
+        case 10: return("October");
+		  break;
+        case 11: return("November");
+		  break;
+        case 12: return("December");
+		  break;}
+    return("");
+   }
+
    function checkno($data)
     {
      global $flag;
@@ -95,7 +178,7 @@ if($_POST)
    $gocc=$_POST["gocc"];
    $gemail=$_POST["gemail"];
    $gpho=$_POST["gpho"];
-   $grel=$_POST["grel"];
+   $grel=$_POST["relation"];
    $pdistrict=$_POST["pdistrict"];
    $pstate=$_POST["pstate"];
    $gdistrict=$_POST["gdistrict"];
@@ -196,7 +279,7 @@ if($_POST)
 				<tr><td width ="400">Class</td><td>
 				<select name="class">
                                         <option selected ="<?php echo $class;?>"><?php echo $class;?></option>
-					<option value ="C1&2A" selected>C1&2A </option>
+					<option value ="C1&2A" >C1&2A </option>
 					<option value ="C1&2B">C1&2B </option>
 					<option value ="C3A">C3A</option>
 					<option value ="C3B">C3B</option>
@@ -242,7 +325,7 @@ if($_POST)
 				<tr><td width ="400">Semester</td><td>
 				<select name="sem">
                                         <option selected ="<?php echo $sem;?>"><?php echo $sem;?></option>
-					<option value ="1&2" selected>1&2 </option>
+					<option value ="1&2" >1&2 </option>
 					<option value ="3">3</option>
 					<option value ="4">4</option>
 					<option value ="5">5</option>
@@ -266,7 +349,7 @@ if($_POST)
 					<select name="day">
 						<option></option>
 						<option selected="<?php echo $day;?>"><?php echo $day;?></option>
-						<option value="01" selected>01</option>
+						<option value="01" >01</option>
 						<option value="02">02</option>
 						<option value="03">03</option>
 						<option value="04">04</option>
@@ -300,8 +383,8 @@ if($_POST)
 						</select>
 						<select name="month" >
 						<option></option>
-						<option selected="<?php echo $month;?>"><?php echo $month;?></option>
-						<option value="01" selected>January</option>
+						<option selected="<?php echo $month;?>"><?php echo monthcheck($month);?></option>
+						<option value="01" >January</option>
 						<option value="02">February</option>
 						<option value="03">March</option>
 						<option value="04">April</option>
@@ -316,7 +399,7 @@ if($_POST)
 						</select>
 						<select name="year">
 						<option selected="<?php echo $year;?>"><?php echo $year;?></option>
-						<option value="1999" selected>1999</option>
+						<option value="1999" >1999</option>
 						<option value="1998">1998</option>
 						<option value="1997">1997</option>
 						<option value="1996">1996</option>
@@ -343,16 +426,17 @@ if($_POST)
 						<option value="1975">1975</option>
 						</select>
 						</td></tr>
-				<tr><td width ="400">Sex</td><td><input type ="radio" name="sex" <?php if (isset($sex) && $sex=="male") echo "checked";?> value="male">Male<input type="radio" name="sex" <?php if (isset($sex) && $sex=="female") echo "checked";?> value="female">Female</td></tr>
+				<tr><td width ="400">Sex</td><td><input type ="radio" name="sex" <?php if (isset($sex) && $sex=="m") echo "checked";?> value="m">Male<input type="radio" name="sex" <?php if (isset($sex) && $sex=="f") echo "checked";?> value="f">Female</td></tr>
 				<tr><td width ="400">Caste</td><td><input type ="text" size ="20" name="caste" value="<?php echo $caste;?>"><p><?php echo $castErr;?></p></td></tr>
 				<tr><td width ="400">Religion</td><td><input type ="text" size ="20" name="religion"  value="<?php echo $religion;?>"><p><?php echo $relErr;?></p></td></tr>
 				<tr><td width ="400">Blood Group</td><td>
 				<select name="bgroup">
-					<option value ="A+" selected>A+</option>
+					<option selected="<?php echo $bgroup;?>"><?php echo $bgroup;?></option>
+					<option value ="A+" >A+</option>
 					<option value ="B+">B+</option>
 					<option value ="O+">O+</option>
-					<option value ="AB+">O+</option>
-					<option value ="AB-">O+</option>
+					<option value ="AB+">AB+</option>
+					<option value ="AB-">AB-</option>
 					<option value ="A-">A-</option>
 					<option value ="B-">B-</option>
 					<option value ="O-">O-</option>
@@ -430,8 +514,9 @@ if($_POST)
 			<table>
 				<tr><td width ="400">Date Of Admission</td><td>
 					<select name="day1">
-						<option></option>
-						<option value="01" selected>01</option>
+						<option ></option>
+						<option selected="<?php echo $day1;?>"><?php echo $day1;?></option>
+						<option value="01">01</option>
 						<option value="02">02</option>
 						<option value="03">03</option>
 						<option value="04">04</option>
@@ -464,7 +549,8 @@ if($_POST)
 						<option value="31">31</option>
 						</select>
 						<select name="month1" > 							         							<option></option>
-						<option value="01" selected>January</option>
+						<option selected="<?php echo $month1;?>"><?php echo monthcheck($month1);?></option>
+						<option value="01">January</option>
 						<option value="02">February</option>
 						<option value="03">March</option>
 						<option value="04">April</option>
@@ -479,7 +565,8 @@ if($_POST)
 						</select>
 						<select name="year1">
 						<option></option>
-						<option value="2035" selected>2035</option>
+						<option selected="<?php echo $year1;?>"><?php echo $year1;?></option>
+						<option value="2035">2035</option>
 						<option value="2034">2034</option>
 						<option value="2033">2033</option>
 						<option value="2032">2032</option>
@@ -530,7 +617,8 @@ if($_POST)
 				<tr><td width ="400">Branch</td><td>
 				<select name="branch">
 					<option></option>
-					<option value ="CSU" selected>CSU</option>
+					<option selected="<?php echo substr($roll,0,3);?>"><?php echo substr($roll,0,3);?></option>
+					<option value ="CSU">CSU</option>
 					<option value ="ECU">ECU</option>
 					<option value ="EBU">EBU</option>
 					<option value ="EEE">EEE</option>
@@ -538,28 +626,30 @@ if($_POST)
 				<tr><td width ="400">Category</td><td>
 				<select name="cat">
 					<option></option>
-					<option value ="GEN" selected>GEN</option>
-					<option value ="EZ">EZ</option>
-					<option value ="MU">MU</option>
-					<option value ="BH">BH</option>
-					<option value ="LC">LC</option>
-					<option value ="BX">BX</option>
-					<option value ="SC">SC</option>
-					<option value ="ST">ST</option>
+					<option selected="<?php echo $cat;?>"><?php echo categorycheck($cat);?></option>
+					<option value ="0">GEN</option>
+					<option value ="1">EZ</option>
+					<option value ="2">MU</option>
+					<option value ="3">BH</option>
+					<option value ="4">LC</option>
+					<option value ="5">BX</option>
+					<option value ="6">SC</option>
+					<option value ="7">ST</option>
 					</select></td></tr>
 				<tr><td width ="400">Reservation</td><td>
 				<select name="res">
-										<option></option>
-					<option value ="SM" selected>SM</option>
-					<option value ="NRI">NRI</option>
-					<option value ="EZ">EZ</option>
-					<option value ="MU">MU</option>
-					<option value ="BH">BH</option>
-					<option value ="LC">LC</option>
-					<option value ="BX">BX</option>
-					<option value ="SC">SC</option>
-					<option value ="ST">ST</option>
-					<option value ="MG">MG</option>
+					<option></option>
+					<option selected="<?php echo $res;?>"><?php echo reservation($res);?></option>
+					<option value ="0" >SM</option>
+					<option value ="1">NRI</option>
+					<option value ="2">EZ</option>
+					<option value ="3">MU</option>
+					<option value ="4">BH</option>
+					<option value ="5">LC</option>
+					<option value ="6">BX</option>
+					<option value ="7">SC</option>
+					<option value ="8">ST</option>
+					<option value ="9">MG</option>
 					</select></td></tr>
 
 				<tr><td width ="400">Previous Institution</td><td><input type ="text" size="20" name="prev" value="<?php echo $prev;?>"></td></tr>
@@ -606,7 +696,7 @@ if($_POST)
 			<table>
 				<tr><td width ="400">Entrance Rank</td><td><input type="text" size="20" name="rank" value="<?php echo $rank;?>"><p><?php echo $rankErr;?></p></td></tr>
 				<tr><td width ="400">Qualifying Exam</td><td><input type="text" size="20" name="qexam" value="<?php echo $qexam;?>"></td></tr>
-				<tr><td width ="400">Qualifying Board</td><td><input type="text" size="20" name="qboard" value="<?php echo $qexam;?>"></td></tr>
+				<tr><td width ="400">Qualifying Board</td><td><input type="text" size="20" name="qboard" value="<?php echo $qboard;?>"></td></tr>
 				<tr><td width ="400">Percentage</td><td><input type="text" size="20" name="percentage" value="<?php echo $percentage;?>"></td></tr>
 				<tr><td width ="400">Year of Pass</td><td><input type="text" size="20"name="yop" value="<?php echo $yop;?>"></td></tr>
 			</table><br></br>
