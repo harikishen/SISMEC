@@ -115,7 +115,7 @@ if($_POST)
    if(checkno($admno)==1)
     $admErr="*Invalid Admission Number";
    if(empty($admno))
-     {$admErr="*Admission Number is Required";$flag++;}
+     {$admErr="*Admission Number is RequiredIndia";$flag++;}
       $admno=$_POST["admno"];
    if(checkname($roll)==1)
     $rollErr="*Invalid Roll Number";
@@ -615,7 +615,7 @@ if($_POST)
 	</div>
 	
 	<div id="footer">
-		Copyright 4008 Model Engineering College, Thrikkakara &copy;
+		Copyright Model Engineering College, Thrikkakara &copy;
 	</div>
 <style>
 p{
