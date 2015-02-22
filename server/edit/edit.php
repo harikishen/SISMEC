@@ -135,10 +135,10 @@ $gphoErr=$rankErr="";
   }
 
   
-$servername = "localhost";
-$username = "root";
-$password = "turbodrive111";
-$dbname = "harikishen";
+$servername = "mysql.x20hosting.com";
+$username = "u122326214_doyle";
+$password = "haridoyle";
+$dbname = "u122326214_mis";
 $adm="6191";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
