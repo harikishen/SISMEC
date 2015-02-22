@@ -1,0 +1,40 @@
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+#wrapper{
+	margin: 200px auto;
+	width: 400px;
+}
+#box{
+	border: 2px solid black;
+	border-radius: 5px;
+	height: 125px;
+	padding: 30px;
+}
+input{
+	float: right;
+	clear: both;
+}
+
+#sub {
+	clear: both;
+	height: 40px;
+	width: 40px;
+	border-radius: 100%;
+	background: white;
+	border: 1px solid black;
+	margin-top: 35px;
+	margin-right: 150px;
+	transition: transform .5s, background .5s;
+}
+
+#sub:hover{
+	background: lightgreen;
+	transform: rotate(360deg);
+
+a{
+	margin-top: 10px;
+
+}
