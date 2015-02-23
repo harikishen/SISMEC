@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css" href="add.css">
 </head>
 <?php
+if(!$_POST){
 $flag=1;
 $admno=$roll=$name=$class=$sem="";
 $admErr=$rollErr=$nameErr="";
@@ -21,6 +22,130 @@ $semailErr=$fnameErr=$femailErr="";
 $fphoErr=$mnameErr=$memailErr="";
 $mphoErr=$gnameErr=$gemailErr="";
 $gphoErr=$rankErr="";
+
+  
+$servername = "localhost";
+$username = "root";
+$password = "turbodrive111";
+$dbname = "harikishen";
+$r=$_GET["sroll"];
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT * FROM admissions WHERE rollno='$r'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+       while($row=$result->fetch_assoc()){
+    	   $admno=$row["admission_no"];
+	   $roll=$row["rollno"];
+	   $name=$row["name"];
+	   $class=$row["class"];
+	   $sem=$row["semester"];
+	   $dob=$row["date_of_birth"];
+	   $dob=explode('-',$dob);
+	   $year=$dob[0];
+	   $month=$dob[1];
+	   $day=$dob[2];
+	   $sex=$row["sex"];
+	   $caste=$row["caste"];
+	   $religion=$row["religion"];
+	   $bgroup=$row["blood_group"];
+	   $spho=$row["student_mobile"];
+	   $semail=$row["student_email"];
+	   $dob1=$row["date_of_admission"];
+	   $dob1=explode('-',$dob1);
+	   $year1=$dob1[0];
+	   $month1=$dob1[1];
+	   $day1=$dob1[2];
+	   $cat=$row["category_id"];
+	   $res=$row["reservation_id"];
+	   $adm=$admno;
+	}
+} else {
+      header("Location:http://127.1.1/notfound.php");exit();
+    }
+
+$sql = "SELECT * FROM addresses WHERE admission_id='$adm'";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+	while($row=$result->fetch_assoc()){
+                   if($row["type"]==0){
+	   $hname=$row["house_name"];
+	   $pl1=$row["place1"];
+	   $pl2=$row["place2"];
+	   $poffice=$row["post_office"];
+	   $district=$row["district"];
+	   $state=$row["state"];
+	   }
+	   if($row["type"]==1){
+	   $phname=$row["house_name"];
+	   $ppl1=$row["place1"];
+	   $ppl2=$row["place2"];
+	   $ppoffice=$row["post_office"];
+	   $pdistrict=$row["district"];
+	   $pstate=$row["state"];
+	   }
+           if($row["type"]==2){
+	   $ghname=$row["house_name"];
+	   $gpl1=$row["place1"];
+	   $gpl2=$row["place2"];
+	   $gpoffice=$row["post_office"];
+	   $gdistrict=$row["district"];
+	   $gstate=$row["state"];
+	   }
+	}
+}
+$sql = "SELECT * FROM details WHERE admission_id='$adm'";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+	$row=$result->fetch_assoc(); 
+   // output data of each row
+	   $prev=$row["previous_institution"];
+	   $rank=$row["entrance_rank"];
+	   $qexam=$row["qualifying_exam"];
+	   $qboard=$row["qualifying_board"];
+	   $percentage=$row["percentage"];
+           $yop=$row["year_of_pass"];
+	
+} else {
+    //echo "0 results";
+}
+$sql = "SELECT * FROM relatives WHERE admission_id='$adm'";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+	while($row=$result->fetch_assoc()){
+    // output data of each row
+           if($row["type"]==0){
+	   $fname=$row["name"];
+	   $focc=$row["occupation"];
+	   $femail=$row["email_address"];
+	   $fpho=$row["phone_no"];
+	   }
+	   if($row["type"]==1){
+	   $mname=$row["name"];
+	   $mocc=$row["occupation"];
+	   $memail=$row["email_address"];
+	   $mpho=$row["phone_no"];
+	   }
+           if($row["type"]==2){
+	   $gname=$row["name"];
+	   $gocc=$row["occupation"];
+	   $gemail=$row["email_address"];
+	   $gpho=$row["phone_no"];
+	   }
+
+	}
+} else {
+    //echo "0 results";
+}
+
+$conn->close();
+}
   function categorycheck($data)
    {
           switch($data)
@@ -74,7 +199,7 @@ $gphoErr=$rankErr="";
    }
 
   function monthcheck($data)
-   { //echo $data;
+   { 
      switch($data)
       {
         case 01: return("January");
@@ -134,139 +259,11 @@ $gphoErr=$rankErr="";
    return 0;
   }
 
-  
-$servername = "localhost";
-$username = "root";
-$password = "turbodrive111";
-$dbname = "harikishen";
-$adm="6191";
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$sql = "SELECT * FROM admissions WHERE admission_no='$adm'";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-       while($row=$result->fetch_assoc()){
-    // output data of each row
-	   $admno=$row["admission_no"];
-	   $roll=$row["rollno"];
-	   $name=$row["name"];
-	   $class=$row["class"];
-	   $sem=$row["semester"];
-	   $dob=$row["date_of_birth"];
-	   $dob=explode('-',$dob);
-	   $year=$dob[0];
-	   $month=$dob[1];
-	   $day=$dob[2];
-	   $sex=$row["sex"];
-	   $caste=$row["caste"];
-	   $religion=$row["religion"];
-	   $bgroup=$row["blood_group"];
-	   $spho=$row["student_mobile"];
-	   $semail=$row["student_email"];
-	   $dob1=$row["date_of_admission"];
-	   $dob1=explode('-',$dob1);
-	   $year1=$dob1[0];
-	   $month1=$dob1[1];
-	   $day1=$dob1[2];
-	   $cat=$row["category_id"];
-	   $res=$row["reservation_id"];
-	}
-} else {
-    echo "0 results";
-}
-$sql = "SELECT * FROM addresses WHERE admission_id='$adm'";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-	while($row=$result->fetch_assoc()){
-    // output data of each row
-               if($row["type"]==0){
-	   $hname=$row["house_name"];
-	   $pl1=$row["place1"];
-	   $pl2=$row["place2"];
-	   $poffice=$row["post_office"];
-	   $district=$row["district"];
-	   $state=$row["state"];
-	   }
-	   if($row["type"]==1){
-	   $phname=$row["house_name"];
-	   $ppl1=$row["place1"];
-	   $ppl2=$row["place2"];
-	   $ppoffice=$row["post_office"];
-	   $pdistrict=$row["district"];
-	   $pstate=$row["state"];
-	   }
-           if($row["type"]==2){
-	   $ghname=$row["house_name"];
-	   $gpl1=$row["place1"];
-	   $gpl2=$row["place2"];
-	   $gpoffice=$row["post_office"];
-	   $gdistrict=$row["district"];
-	   $gstate=$row["state"];
-	   }
-	}
-} else {
-    echo "0 results";
-}
-$sql = "SELECT * FROM details WHERE admission_id='$adm'";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-	$row=$result->fetch_assoc(); 
-   // output data of each row
-	   $prev=$row["previous_institution"];
-	   $rank=$row["entrance_rank"];
-	   $qexam=$row["qualifying_exam"];
-	   $qboard=$row["qualifying_board"];
-	   $percentage=$row["percentage"];
-           $yop=$row["year_of_pass"];
-//echo $rank;echo $prev;echo $qexam;
-	
-} else {
-    echo "0 results";
-}
-$sql = "SELECT * FROM relatives WHERE admission_id='$adm'";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-	while($row=$result->fetch_assoc()){
-    // output data of each row
-           if($row["type"]==0){
-	   $fname=$row["name"];
-	   $focc=$row["occupation"];
-	   $femail=$row["email_address"];
-	   $fpho=$row["phone_no"];
-	   }
-	   if($row["type"]==1){
-	   $mname=$row["name"];
-	   $mocc=$row["occupation"];
-	   $memail=$row["email_address"];
-	   $mpho=$row["phone_no"];
-	   }
-           if($row["type"]==2){
-	   $gname=$row["name"];
-	   $gocc=$row["occupation"];
-	   $gemail=$row["email_address"];
-	   $gpho=$row["phone_no"];
-	   }
-
-	}
-} else {
-    echo "0 results";
-}
-
-$conn->close();
-  
-
-if($_POST)
+if($_POST )
  { 
-   $_POST["direct"]=1;
    $flag=0;
-   $admno=$_POST["admno"];
    $roll=$_POST["roll"];
+   $admno=$_POST["admno"];
    $name=$_POST["name"];
    $class=$_POST["class"];
    $sem=$_POST["sem"];
@@ -305,7 +302,7 @@ if($_POST)
    $gocc=$_POST["gocc"];
    $gemail=$_POST["gemail"];
    $gpho=$_POST["gpho"];
-   $grel=$_POST["grel"];
+   $grel=$_POST["relation"];
    $pdistrict=$_POST["pdistrict"];
    $pstate=$_POST["pstate"];
    $gdistrict=$_POST["gdistrict"];
@@ -377,12 +374,13 @@ if($_POST)
      {$gphoErr="*Phone Number is Required";$flag++;}
         session_start();
 	$_SESSION=$_POST;
-	session_write_close();
+	$_SESSION["direct"]=2;
+	//$_SESSION["admno"]=$admno;
+	session_write_close();//echo"test";
 
    if($flag==0)
-    {       
-
-	header("Location: http://127.1.1/db.php");exit();
+    {    //echo "test";  
+	header("Location:http://127.1.1/update.php");exit();
     }
   }
 
@@ -400,8 +398,9 @@ if($_POST)
 		<h3>Student Details</h3><hr><br>
 		<form name="form1"  method="post" action="edit.php" id="form1" >
 			<table>
-				<tr><td width ="400">Admission No</td><td><input type ="text" name="admno" value="<?php echo $admno;?>" size="20"></td><td><p><?php echo $admErr;?></p></td></tr>
-				<tr><td width ="400">Roll No</td><td><input type ="text" name="roll" value="<?php echo $roll;?>" size ="20"></td><td><p><?php echo $rollErr;?></p></td></tr>
+                                 
+				<tr><td width ="400">Admission No</td><input hidden="true" name="admno" value="<?php echo $admno?>"><td><?php  echo $admno;?></td><td><p></p></td></tr>
+				<tr><td width ="400">Roll No</td><input hidden="true" name="roll" value="<?php echo $roll;?>"><td><?php  echo $roll;?></td><td><p></p></td></tr>
                                 <tr><td width ="400">Name</td><td><input type ="text" name="name" value="<?php echo $name;?>" size="20"></td><td><p><?php echo $nameErr;?><p></td></tr>
 				<tr><td width ="400">Class</td><td>
 				<select name="class">
@@ -827,7 +826,7 @@ if($_POST)
 				<tr><td width ="400">Percentage</td><td><input type="text" size="20" name="percentage" value="<?php echo $percentage;?>"></td></tr>
 				<tr><td width ="400">Year of Pass</td><td><input type="text" size="20"name="yop" value="<?php echo $yop;?>"></td></tr>
 			</table><br></br>
-                                 <div align="center"><input type="submit" name="submit"  value="&check;" id="but_sub"></div>
+                                 <div align="center"><input formmethod="post" type="submit" name="submit"  value="&check;" id="but_sub"></div>
 		</form>
 	</div>
 	

@@ -6,7 +6,7 @@ $dbname = "harikishen";
 
 session_start();
 $_POST = $_SESSION;
-if($_POST["direct"]!=1)
+if($_POST["direct"]!=2)
 	{die('Access Denied');}
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -98,76 +98,67 @@ $goccupation=$_POST["gocc"];
 $gemail_address=$_POST["gemail"];
 $gphone_no=$_POST["gpho"];
 
-
-
-
-$sql = "INSERT INTO admissions (admission_no,name,date_of_birth,sex,caste,religion,naitivity,village,taluk,relation,blood_group,annual_income,student_mobile,student_email,date_of_admission, course_id,category_id,reservation_id,detail_id,transfercertificate_id,rollno,batch,semester,phone_no,class,regno,year_po)
-VALUES ('$admission_no','$name','$date_of_birth','$sex','$caste','$religion','$naitivity','$village','$taluk','$relation','$blood_group','$annual_income',
-'$student_mobile','$student_email','$date_of_admission','$course_id','$category_id','$reservation_id','$detail_id','$transfercertificate_id','$rollno','$batch',
-'$semester','$student_mobile','$class','$regno','$year_po');";
-
+$sql = "UPDATE admissions SET name='$name',date_of_birth='$date_of_birth',sex='$sex',caste='$caste',religion='$religion',naitivity='$naitivity',village='$village',taluk='$taluk',relation='$relation',blood_group='$blood_group',annual_income='$annual_income',student_mobile='$student_mobile',student_email='$student_email',date_of_admission='$date_of_admission', course_id='$course_id',category_id='$category_id',reservation_id='$reservation_id',detail_id='$detail_id',transfercertificate_id='$transfercertificate_id',batch='$batch',semester='$semester',phone_no='$phone_no',class='$class',regno='$regno',year_po='$year_po' WHERE rollno='$rollno' ";
 if ($conn->query($sql) === TRUE) {
     $last_id = $conn->insert_id;
     $id=$last_id;
-    echo "New record created successfully in admissions. Last inserted ID is: " . $last_id;
+    echo "Record updated successfully in admissions";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-$sql = "INSERT INTO addresses (admission_id,type,house_name,place1,place2,post_office,district,state,pin)
-VALUES ('$admission_id',0,'$house_name','$place1','$place2','$post_office','$district','$state','$pin');";
+$sql = "UPDATE addresses SET house_name='$house_name',place1='$place1',place2='$place2',post_office='$post_office',district='$district',state='$state',pin='$pin' WHERE admission_id='$admission_no' AND type=0";
 if ($conn->query($sql) === TRUE) {
-    echo "<br>New record created successfully in addresses.";
+    echo "<br>Record updated successfully in addresses";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
-$sql = "INSERT INTO addresses (admission_id,type,house_name,place1,place2,post_office,district,state,pin)
-VALUES ('$admission_id',1,'$phouse_name','$pplace1','$pplace2','$ppost_office','$pdistrict','$pstate','$pin');";
+$sql = "UPDATE addresses SET house_name='$phouse_name',place1='$pplace1',place2='$pplace2',post_office='$ppost_office',district='$pdistrict',state='$pstate',pin='$ppin' WHERE admission_id='$admission_no' AND type=1";
 if ($conn->query($sql) === TRUE) {
-    echo "<br>New record created successfully in addresses.";
+    echo "<br>Record updated successfully in addresses";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
-$sql = "INSERT INTO addresses (admission_id,type,house_name,place1,place2,post_office,district,state,pin)
-VALUES ('$admission_id',2,'$ghouse_name','$gplace1','$gplace2','$gpost_office','$gdistrict','$gstate','$pin');";
+$sql = "UPDATE addresses SET house_name='$ghouse_name',place1='$gplace1',place2='$gplace2',post_office='$gpost_office',district='$gdistrict',state='$gstate',pin='$gpin' WHERE admission_id='$admission_no' AND type=2";
 if ($conn->query($sql) === TRUE) {
-    echo "<br>New record created successfully in addresses.";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-}
-
-$sql = "INSERT INTO details (admission_id,previous_institution,register_no,tc_no,tc_date,entrance_roll_no,entrance_rank,qualifying_board,qualifying_exam,
-percentage,year_of_pass)
-VALUES ('$admission_no','$previous_institution','$register_no','$tc_no','$tc_date','$entrance_roll_no','$entrance_rank','$qualifying_board','$qualifying_exam',
-'$percentage','$year_of_pass');";
-if ($conn->query($sql) === TRUE) {
-    echo "<br>New record created successfully in details.";
+    echo "<br>Record updated successfully in addresses";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
-$sql = "INSERT INTO relatives (admission_id,type,name,occupation,email_address,phone_no)
-VALUES ('$admission_no',0,'$fname','$foccupation','$femail_address','$fphone_no');";
+$sql = "UPDATE details SET previous_institution='$previous_institution',register_no='$register_no',tc_no='$tc_no',tc_date='$tc_date',entrance_roll_no='$entrance_roll_no',entrance_rank='$entrance_rank',qualifying_board='$qualifying_board',qualifying_exam='$qualifying_exam',
+percentage='$percentage',year_of_pass='$year_of_pass' WHERE admission_id='$admission_no'";
 if ($conn->query($sql) === TRUE) {
-    echo "<br>New record created successfully in relatives.";
+    echo "<br>Record updated successfully in details.";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
-$sql = "INSERT INTO relatives (admission_id,type,name,occupation,email_address,phone_no)
-VALUES ('$admission_no',1,'$mname','$moccupation','$memail_address','$mphone_no');";
+
+$sql = "UPDATE relatives SET name='$fname',occupation='$foccupation',email_address='$femail_address',phone_no='$fphone_no' WHERE admission_id='$admission_no' AND type=0";
 if ($conn->query($sql) === TRUE) {
-    echo "<br>New record created successfully in relatives.";
+    echo "<br>Record updated successfully in relatives.";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
-$sql = "INSERT INTO relatives (admission_id,type,name,occupation,email_address,phone_no)
-VALUES ('$admission_no',2,'$gname','$goccupation','$gemail_address','$gphone_no');";
+$sql = "UPDATE relatives SET name='$mname',occupation='$moccupation',email_address='$memail_address',phone_no='$mphone_no' WHERE admission_id='$admission_no' AND type=1";
 if ($conn->query($sql) === TRUE) {
-    echo "<br>New record created successfully in relatives.";
+    echo "<br>Record updated successfully in relatives.";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+$sql = "UPDATE relatives SET name='$gname',occupation='$goccupation',email_address='$gemail_address',phone_no='$gphone_no' WHERE admission_id='$admission_no' AND type=2";
+if ($conn->query($sql) === TRUE) {
+    echo "<br>Record updated successfully in relatives.";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
 
 session_destroy();
 $conn->close();
+
+
+
+
+
+
 ?>
