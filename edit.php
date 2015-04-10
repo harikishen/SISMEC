@@ -36,7 +36,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM admissions WHERE rollno='$r'";
+$sql = "SELECT * FROM admissions WHERE admission_no='$r'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -47,6 +47,7 @@ if ($result->num_rows > 0) {
 	   $class=$row["class"];
 	   $sem=$row["semester"];
 	   $dob=$row["date_of_birth"];
+	   $grel=$row["relation"];
 	   $dob=explode('-',$dob);
 	   $year=$dob[0];
 	   $month=$dob[1];
@@ -831,7 +832,7 @@ if($_POST )
 	</div>
 	
 	<div id="footer">
-		Copyright 4008 Model Engineering College, Thrikkakara &copy;
+		Copyright 2013 Model Engineering College, Thrikkakara &copy;
 	</div>
 <style>
 p{

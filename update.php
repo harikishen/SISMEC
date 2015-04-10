@@ -16,6 +16,55 @@ if ($conn->connect_error) {
 } 
 
 
+//echo $_POST["month"];
+if($_POST["month"]=="January")
+  $_POST["month"]="01";
+if($_POST["month"]=="February")
+  $_POST["month"]="02";
+if($_POST["month"]=="March")
+  $_POST["month"]="03";
+if($_POST["month"]=="April")
+  $_POST["month"]="04";
+if($_POST["month"]=="May")
+  $_POST["month"]="05";
+if($_POST["month"]=="June")
+  $_POST["month"]="06";
+if($_POST["month"]=="July")
+  $_POST["month"]="07";
+if($_POST["month"]=="August")
+  $_POST["month"]="08";
+if($_POST["month"]=="September")
+  $_POST["month"]="09";
+if($_POST["month"]=="October")
+  $_POST["month"]="10";
+if($_POST["month"]=="November")
+  $_POST["month"]="11";
+if($_POST["month"]=="December")
+  $_POST["month"]="12";
+if($_POST["month1"]=="January")
+  $_POST["month1"]="01";
+if($_POST["month1"]=="February")
+  $_POST["month1"]="02";
+if($_POST["month1"]=="March")
+  $_POST["month1"]="03";
+if($_POST["month1"]=="April")
+  $_POST["month1"]="04";
+if($_POST["month1"]=="May")
+  $_POST["month1"]="05";
+if($_POST["month1"]=="June")
+  $_POST["month1"]="06";
+if($_POST["month1"]=="July")
+  $_POST["month1"]="07";
+if($_POST["month1"]=="August")
+  $_POST["month1"]="08";
+if($_POST["month1"]=="September")
+  $_POST["month1"]="09";
+if($_POST["month1"]=="October")
+  $_POST["month1"]="10";
+if($_POST["month1"]=="November")
+  $_POST["month1"]="11";
+if($_POST["month1"]=="December")
+  $_POST["month1"]="12";
 
 $id=null;
 $admission_id=null;
@@ -106,7 +155,7 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
-
+echo $date_of_birth;
 $sql = "UPDATE addresses SET house_name='$house_name',place1='$place1',place2='$place2',post_office='$post_office',district='$district',state='$state',pin='$pin' WHERE admission_id='$admission_no' AND type=0";
 if ($conn->query($sql) === TRUE) {
     echo "<br>Record updated successfully in addresses";
@@ -156,7 +205,9 @@ if ($conn->query($sql) === TRUE) {
 session_destroy();
 $conn->close();
 
-
+/*function convert($data){
+if($data=="January")
+ return 1;}*/
 
 
 

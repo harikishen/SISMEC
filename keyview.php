@@ -6,9 +6,9 @@
 
 	<div id="wrapper">
 		<div id="box">
-			<form action="deletion.php" method="post">
-				Roll No.<input type="text" size="20" name="sroll"><br><br>
-				Name<input type="text" size="20" name="sname"><br>
+			<form action="view.php" method="post">
+				Admission No.<input type="text" size="17" name="sroll" ><br><br>
+			<!--	Name<input type="text" size="20" name="sname"><br>-->
 				<input type ="submit" id="sub" value="&check;">
 			</form>
 			
