@@ -1,9 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "turbodrive111";
-$dbname = "harikishen";
-
+require_once 'dbconnect.php';
 session_start();
 $_POST = $_SESSION;
 if($_POST["direct"]!=2)

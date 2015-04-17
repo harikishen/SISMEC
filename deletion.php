@@ -1,9 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "turbodrive111";
-$dbname = "harikishen";
-
+require_once 'dbconnect.php';
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection

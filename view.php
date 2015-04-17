@@ -22,12 +22,7 @@ $semailErr=$fnameErr=$femailErr="";
 $fphoErr=$mnameErr=$memailErr="";
 $mphoErr=$gnameErr=$gemailErr="";
 $gphoErr=$rankErr="";
-
-  
-$servername = "localhost";
-$username = "root";
-$password = "turbodrive111";
-$dbname = "harikishen";
+require_once 'dbconnect.php';  
 $r=$_POST["sroll"];
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
