@@ -12,55 +12,6 @@ if ($conn->connect_error) {
 } 
 
 
-//echo $_POST["month"];
-if($_POST["month"]=="January")
-  $_POST["month"]="01";
-if($_POST["month"]=="February")
-  $_POST["month"]="02";
-if($_POST["month"]=="March")
-  $_POST["month"]="03";
-if($_POST["month"]=="April")
-  $_POST["month"]="04";
-if($_POST["month"]=="May")
-  $_POST["month"]="05";
-if($_POST["month"]=="June")
-  $_POST["month"]="06";
-if($_POST["month"]=="July")
-  $_POST["month"]="07";
-if($_POST["month"]=="August")
-  $_POST["month"]="08";
-if($_POST["month"]=="September")
-  $_POST["month"]="09";
-if($_POST["month"]=="October")
-  $_POST["month"]="10";
-if($_POST["month"]=="November")
-  $_POST["month"]="11";
-if($_POST["month"]=="December")
-  $_POST["month"]="12";
-if($_POST["month1"]=="January")
-  $_POST["month1"]="01";
-if($_POST["month1"]=="February")
-  $_POST["month1"]="02";
-if($_POST["month1"]=="March")
-  $_POST["month1"]="03";
-if($_POST["month1"]=="April")
-  $_POST["month1"]="04";
-if($_POST["month1"]=="May")
-  $_POST["month1"]="05";
-if($_POST["month1"]=="June")
-  $_POST["month1"]="06";
-if($_POST["month1"]=="July")
-  $_POST["month1"]="07";
-if($_POST["month1"]=="August")
-  $_POST["month1"]="08";
-if($_POST["month1"]=="September")
-  $_POST["month1"]="09";
-if($_POST["month1"]=="October")
-  $_POST["month1"]="10";
-if($_POST["month1"]=="November")
-  $_POST["month1"]="11";
-if($_POST["month1"]=="December")
-  $_POST["month1"]="12";
 
 $id=null;
 $admission_id=null;
@@ -75,7 +26,7 @@ $pin=null;
 $admission_no=$_POST["admno"];
 $admission_id=$_POST["admno"];
 $name=$_POST["name"];
-$date_of_birth=$_POST["year"].'-'.$_POST["month"].'-'.$_POST["day"];
+$date_of_birth=$_POST["dob"];
 $sex=$_POST["sex"];
 $caste=$_POST["caste"];
 $religion=$_POST["religion"];
@@ -104,7 +55,7 @@ $blood_group=$_POST["bgroup"];
 $annual_income=null;
 $student_mobile=$_POST["spho"];
 $student_email=$_POST["semail"];
-$date_of_admission=$_POST["year1"].'-'.$_POST["month1"].'-'.$_POST["day1"];
+$date_of_admission=$_POST["doa"];
 $course_id=null;
 $category_id=null;
 $reservation_id=null;
@@ -201,9 +152,6 @@ if ($conn->query($sql) === TRUE) {
 session_destroy();
 $conn->close();
 
-/*function convert($data){
-if($data=="January")
- return 1;}*/
 
 
 

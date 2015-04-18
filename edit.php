@@ -1,5 +1,9 @@
 <html>
 <head><title>SISMEC</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="date.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="add.css">
 </head>
 <?php
@@ -44,21 +48,13 @@ if ($result->num_rows > 0) {
 	   $sem=$row["semester"];
 	   $dob=$row["date_of_birth"];
 	   $grel=$row["relation"];
-	   $dob=explode('-',$dob);
-	   $year=$dob[0];
-	   $month=$dob[1];
-	   $day=$dob[2];
 	   $sex=$row["sex"];
 	   $caste=$row["caste"];
 	   $religion=$row["religion"];
 	   $bgroup=$row["blood_group"];
 	   $spho=$row["student_mobile"];
 	   $semail=$row["student_email"];
-	   $dob1=$row["date_of_admission"];
-	   $dob1=explode('-',$dob1);
-	   $year1=$dob1[0];
-	   $month1=$dob1[1];
-	   $day1=$dob1[2];
+	   $doa=$row["date_of_admission"];
 	   $cat=$row["category_id"];
 	   $res=$row["reservation_id"];
 	   $adm=$admno;
@@ -195,36 +191,6 @@ $conn->close();
     return("");
    }
 
-  function monthcheck($data)
-   { 
-     switch($data)
-      {
-        case 01: return("January");
-		  break;
-        case 2: return("February");
-		  break;
-        case 3: return("March");
-		  break;
-        case 4: return("April");
-		  break;
-        case 5: return("May");
-		  break;
-        case 6: return("June");
-		  break;
-        case 7: return("July");
-		  break;
-        case 8: return("August");
-		  break;
-        case 9: return("September");
-		  break;
-        case 10: return("October");
-		  break;
-        case 11: return("November");
-		  break;
-        case 12: return("December");
-		  break;}
-    return("");
-   }
    function checkno($data)
     {
      global $flag;
@@ -235,38 +201,16 @@ $conn->close();
        }
      return 0;
     }
-   function checkmail($email)
-   {
-     global $flag;
-     if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-      {
-        $flag++;  
-        return 1;
-      }
-      return 0;
-   }
-  function checkname($data)
-  {
-   global $flag;
-   if(!preg_match("/^[a-zA-Z0-9 ]*$/",$data))
-    {
-      $flag++;
-      return 1;
-    }
-   return 0;
-  }
-
-if($_POST )
+if($_POST)
  { 
+   $_POST["direct"]=1;
    $flag=0;
-   $roll=$_POST["roll"];
    $admno=$_POST["admno"];
+   $roll=$_POST["roll"];
    $name=$_POST["name"];
    $class=$_POST["class"];
    $sem=$_POST["sem"];
-   $day=$_POST["day"];
-   $month=$_POST["month"];
-   $year=$_POST["year"];
+   $dob=$_POST["dob"];
    $sex=$_POST["sex"];
    $caste=$_POST["caste"];
    $religion=$_POST["religion"];
@@ -304,9 +248,7 @@ if($_POST )
    $pstate=$_POST["pstate"];
    $gdistrict=$_POST["gdistrict"];
    $gstate=$_POST["gstate"];
-   $day1=$_POST["day1"];
-   $month1=$_POST["month1"];
-   $year1=$_POST["year1"];
+   $doa=$_POST["doa"];
    $branch=$_POST["branch"];
    $cat=$_POST["cat"];
    $res=$_POST["res"];
@@ -318,66 +260,24 @@ if($_POST )
    $yop=$_POST["yop"];
    if(checkno($admno)==1)
     $admErr="*Invalid Admission Number";
-   if(empty($admno))
-     {$admErr="*Admission Number is Required";$flag++;}
-      $admno=$_POST["admno"];
-   if(checkname($roll)==1)
-    $rollErr="*Invalid Roll Number";
-   if(empty($roll))
-     {$rollErr="*Roll Number is Required";$flag++;}
-   if(checkname($name)==1)
-    $nameErr="*Invalid Name";
-   if(empty($name))
-     {$nameErr="*Name is Required";$flag++;}
-   if(checkmail($semail)==1)
-    $semailErr="*Invalid Email ID";
-   if(empty($semail))
-     {$semailErr="*Email ID is Required";$flag++;}
+        $admno=$_POST["admno"];
    if(checkno($spho)==1)
     $sphErr="*Invalid Phone Number";
-   if(empty($spho))
-     {$sphErr="*Phone Number is Required";$flag++;}
-   if(checkname($fname)==1)
-    $nameErr="*Invalid Name";
-   if(empty($fname))
-     {$fnameErr="*Father's Name is Required";$flag++;}
-   if(checkmail($femail)==1)
-    $femailErr="*Invalid Email ID";
-   if(empty($femail))
-     {$femailErr="*Email ID is Required";$flag++;}
    if(checkno($fpho)==1)
     $fphoErr="*Invalid Phone Number";
-   if(empty($fpho))
-     {$fphoErr="*Phone Number is Required";$flag++;}
-   if(empty($mname))
-     {$mnameErr="*Mother's Name is Required";$flag++;}
-   if(checkmail($memail)==1)
-    $memailErr="*Invalid Email ID";
-   if(empty($memail))
-     {$memailErr="*Email ID is Required";$flag++;}
    if(checkno($mpho)==1)
     $mphoErr="*Invalid Phone Number";
-   if(empty($mpho))
-     {$mphoErr="*Phone Number is Required";$flag++;}
-   if(empty($gname))
-     {$gnameErr="*Guardian's Name is Required";$flag++;}
-   if(checkmail($gemail)==1)
-    $gemailErr="*Invalid Email ID";
-   if(empty($gemail))
-     {$gemailErr="*Email ID is Required";$flag++;}
    if(checkno($gpho)==1)
     $gphoErr="*Invalid Phone Number";
-   if(empty($gpho))
-     {$gphoErr="*Phone Number is Required";$flag++;}
         session_start();
 	$_SESSION=$_POST;
-	$_SESSION["direct"]=2;
-	//$_SESSION["admno"]=$admno;
-	session_write_close();//echo"test";
+   $_SESSION["direct"]=2;
+	session_write_close();
 
    if($flag==0)
-    {    //echo "test";  
-	header("Location:http://127.1.1/update.php");exit();
+    {       
+     
+	header("Location: http://127.1.1/update.php");exit();
     }
   }
 
@@ -395,10 +295,9 @@ if($_POST )
 		<h3>Student Details</h3><hr><br>
 		<form name="form1"  method="post" action="edit.php" id="form1" >
 			<table>
-                                 
-				<tr><td width ="400">Admission No</td><input hidden="true" name="admno" value="<?php echo $admno?>"><td><?php  echo $admno;?></td><td><p></p></td></tr>
-				<tr><td width ="400">Roll No</td><input hidden="true" name="roll" value="<?php echo $roll;?>"><td><?php  echo $roll;?></td><td><p></p></td></tr>
-                                <tr><td width ="400">Name</td><td><input type ="text" name="name" value="<?php echo $name;?>" size="20"></td><td><p><?php echo $nameErr;?><p></td></tr>
+				<tr><td width ="400">Admission No</td><td><input type ="text" name="admno" value="<?php echo $admno;?>" size="20" required></td><td><p><?php echo $admErr;?></p></td></tr>
+				<tr><td width ="400">Roll No</td><td><input type ="text" name="roll" value="<?php echo $roll;?>" size ="20" required></td><td></td></tr>
+                                <tr><td width ="400">Name</td><td><input type ="text" name="name" value="<?php echo $name;?>" size="20" required></td><td></td></tr>
 				<tr><td width ="400">Class</td><td>
 				<select name="class">
                                         <option selected ="<?php echo $class;?>"><?php echo $class;?></option>
@@ -468,90 +367,10 @@ if($_POST )
 		<h3>Personal Details</h3><hr><br>
 		
 			<table>
-				<tr><td width ="400">DoB</td><td>
-					<select name="day">
-						<option></option>
-						<option selected="<?php echo $day;?>"><?php echo $day;?></option>
-						<option value="01" >01</option>
-						<option value="02">02</option>
-						<option value="03">03</option>
-						<option value="04">04</option>
-						<option value="05">05</option>
-						<option value="06">06</option>
-						<option value="07">07</option>
-						<option value="08">08</option>
-						<option value="09">09</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-						<option value="13">13</option>
-						<option value="14">14</option>
-						<option value="15">15</option>
-						<option value="16">16</option>
-						<option value="17">17</option>
-						<option value="18">18</option>
-						<option value="19">19</option>
-						<option value="20">20</option>
-						<option value="21">21</option>
-						<option value="22">22</option>
-						<option value="23">23</option>
-						<option value="24">24</option>
-						<option value="25">25</option>
-						<option value="26">26</option>
-						<option value="27">27</option>
-						<option value="28">28</option>
-						<option value="29">29</option>
-						<option value="30">30</option>
-						<option value="31">31</option>
-						</select>
-						<select name="month" >
-						<option></option>
-						<option selected="<?php echo $month;?>"><?php echo monthcheck($month);?></option>
-						<option value="01" >January</option>
-						<option value="02">February</option>
-						<option value="03">March</option>
-						<option value="04">April</option>
-						<option value="05">May</option>
-						<option value="06">June</option>
-						<option value="07">July</option>
-						<option value="08">August</option>
-						<option value="09">September</option>
-						<option value="10">October</option>
-						<option value="11">November</option>
-						<option value="12">December</option>
-						</select>
-						<select name="year">
-						<option selected="<?php echo $year;?>"><?php echo $year;?></option>
-						<option value="1999" >1999</option>
-						<option value="1998">1998</option>
-						<option value="1997">1997</option>
-						<option value="1996">1996</option>
-						<option value="1995">1995</option>
-						<option value="1994">1994</option>
-						<option value="1993">1993</option>
-						<option value="1992">1992</option>
-						<option value="1991">1991</option>
-						<option value="1990">1990</option>
-						<option value="1989">1989</option>
-						<option value="1988">1988</option>
-						<option value="1987">1987</option>
-						<option value="1986">1986</option>
-						<option value="1985">1985</option>
-						<option value="1984">1984</option>
-						<option value="1983">1983</option>
-						<option value="1982">1982</option>
-						<option value="1981">1981</option>
-						<option value="1980">1980</option>
-						<option value="1979">1979</option>
-						<option value="1978">1978</option>
-						<option value="1977">1977</option>
-						<option value="1976">1976</option>
-						<option value="1975">1975</option>
-						</select>
-						</td></tr>
+				<tr><td width ="400">DoB</td><td><input type ="date" size ="20" name="dob" value="<?php echo $dob;?>" placeholder="yyyy/mm/dd" required></td></tr>
 				<tr><td width ="400">Sex</td><td><input type ="radio" name="sex" <?php if (isset($sex) && $sex=="m") echo "checked";?> value="m">Male<input type="radio" name="sex" <?php if (isset($sex) && $sex=="f") echo "checked";?> value="f">Female</td></tr>
-				<tr><td width ="400">Caste</td><td><input type ="text" size ="20" name="caste" value="<?php echo $caste;?>"><p><?php echo $castErr;?></p></td></tr>
-				<tr><td width ="400">Religion</td><td><input type ="text" size ="20" name="religion"  value="<?php echo $religion;?>"><p><?php echo $relErr;?></p></td></tr>
+				<tr><td width ="400">Caste</td><td><input type ="text" size ="20" name="caste" value="<?php echo $caste;?>"></td></tr>
+				<tr><td width ="400">Religion</td><td><input type ="text" size ="20" name="religion"  value="<?php echo $religion;?>"></td></tr>
 				<tr><td width ="400">Blood Group</td><td>
 				<select name="bgroup">
 					<option selected="<?php echo $bgroup;?>"><?php echo $bgroup;?></option>
@@ -564,8 +383,8 @@ if($_POST )
 					<option value ="B-">B-</option>
 					<option value ="O-">O-</option>
 				</select></td></tr>
-				<tr><td width ="400">Students Ph no.</td><td><input type ="text" size="20" name="spho" value="<?php echo $spho;?>"></td><td><p><?php echo $sphErr;?></p></td></tr>
-				<tr><td width ="400">Students email</td><td><input type ="text" size="20" name="semail" value="<?php echo $semail;?>"></td><td><p><?php echo $semailErr;?></p></td></tr>	
+				<tr><td width ="400">Students Ph no.</td><td><input type =tel size="20" name="spho" value="<?php echo $spho;?>" required></td><td></td></tr>
+				<tr><td width ="400">Students email</td><td><input type =email size="20" name="semail" value="<?php echo $semail;?>" required></td><td></td></tr>	
 			</table>
 		
 	</div>
@@ -577,10 +396,10 @@ if($_POST )
 		<h3>Fathers Details</h3><hr><br>
 		
 			<table>
-				<tr><td width ="400">Name</td><td><input type="text" size="20" name="fname" value="<?php echo $fname;?>"></td><td><p><?php echo $fnameErr;?></p></td></tr>
+				<tr><td width ="400">Name</td><td><input type="text" size="20" name="fname" value="<?php echo $fname;?>" required></td><td></td></tr>
 				<tr><td width ="400">Occupation</td><td><input type="text" size="20" name="focc" value="<?php echo $focc;?>"></td></tr>
-				<tr><td width ="400">Email</td><td><input type="text" size="20" name="femail" value="<?php echo $femail;?>"></td><td><p><?php echo $femailErr;?></p></td><tr>
-				<tr><td width ="400">Phone no</td><td><input type="text" size="20" name="fpho" value="<?php echo $fpho;?>"></td><td><p><?php echo $fphoErr;?></p></td><tr>
+				<tr><td width ="400">Email</td><td><input type="email" size="20" name="femail" value="<?php echo $femail;?>" required></td><td></td><tr>
+				<tr><td width ="400">Phone no</td><td><input type="text" size="20" name="fpho" value="<?php echo $fpho;?>" required></td><td><p><?php echo $fphoErr;?></p></td><tr>
 			</table>
 		
 	</div>
@@ -592,10 +411,10 @@ if($_POST )
 		<h3>Mothers Details</h3><hr><br>
 		
 			<table>
-				<tr><td width ="400">Name</td><td><input type="text" size="20" name="mname"value="<?php echo $mname;?>"></td><td><p><?php echo $mnameErr;?></p></td></tr>
+				<tr><td width ="400">Name</td><td><input type="text" size="20" name="mname"value="<?php echo $mname;?>" required></td><td></td></tr>
 				<tr><td width ="400">Occupation</td><td><input type="text" size="20" name="mocc" value="<?php echo $mocc;?>"></td></tr>
-				<tr><td width ="400">Email</td><td><input type="text" size="20" name="memail" value="<?php echo $memail;?>"></td><td><p><?php echo $memailErr;?></p></td><tr>
-				<tr><td width ="400">Phone no</td><td><input type="text" size="20" name="mpho" value="<?php echo $mpho;?>"></td><td><p><?php echo $mphoErr;?></p><td></tr>
+				<tr><td width ="400">Email</td><td><input type="email" size="20" name="memail" value="<?php echo $memail;?>" required></td><td></td><tr>
+				<tr><td width ="400">Phone no</td><td><input type="text" size="20" name="mpho" value="<?php echo $mpho;?>" required></td><td><td></tr>
 			</table>
 		
 	</div>
@@ -635,108 +454,7 @@ if($_POST )
 		<h3>Admission Details And Previous Institution Details</h3><hr><br>
 		
 			<table>
-				<tr><td width ="400">Date Of Admission</td><td>
-					<select name="day1">
-						<option ></option>
-						<option selected="<?php echo $day1;?>"><?php echo $day1;?></option>
-						<option value="01">01</option>
-						<option value="02">02</option>
-						<option value="03">03</option>
-						<option value="04">04</option>
-						<option value="05">05</option>
-						<option value="06">06</option>
-						<option value="07">07</option>
-						<option value="08">08</option>
-						<option value="09">09</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-						<option value="13">13</option>
-						<option value="14">14</option>
-						<option value="15">15</option>
-						<option value="16">16</option>
-						<option value="17">17</option>
-						<option value="18">18</option>
-						<option value="19">19</option>
-						<option value="20">20</option>
-						<option value="21">21</option>
-						<option value="22">22</option>
-						<option value="23">23</option>
-						<option value="24">24</option>
-						<option value="25">25</option>
-						<option value="26">26</option>
-						<option value="27">27</option>
-						<option value="28">28</option>
-						<option value="29">29</option>
-						<option value="30">30</option>
-						<option value="31">31</option>
-						</select>
-						<select name="month1" > 							         							<option></option>
-						<option selected="<?php echo $month1;?>"><?php echo monthcheck($month1);?></option>
-						<option value="01">January</option>
-						<option value="02">February</option>
-						<option value="03">March</option>
-						<option value="04">April</option>
-						<option value="05">May</option>
-						<option value="06">June</option>
-						<option value="07">July</option>
-						<option value="08">August</option>
-						<option value="09">September</option>
-						<option value="10">October</option>
-						<option value="11">November</option>
-						<option value="12">December</option>
-						</select>
-						<select name="year1">
-						<option></option>
-						<option selected="<?php echo $year1;?>"><?php echo $year1;?></option>
-						<option value="2035">2035</option>
-						<option value="2034">2034</option>
-						<option value="2033">2033</option>
-						<option value="2032">2032</option>
-						<option value="2031">2031</option>
-						<option value="2030">2030</option>
-						<option value="2029">2029</option>
-						<option value="2028">2028</option>
-						<option value="2027">2027</option>
-						<option value="2026">2026</option>
-						<option value="2025">2025</option>
-						<option value="2024">2024</option>
-						<option value="2023">2023</option>
-						<option value="2022">2022</option>
-						<option value="2021">2021</option>
-						<option value="2020">2020</option>
-						<option value="2019">2019</option>
-						<option value="2018">2018</option>
-						<option value="2017">2017</option>
-						<option value="2016">2016</option>
-						<option value="2015">2015</option>
-						<option value="2014">2014</option>
-						<option value="2013">2013</option>
-						<option value="2012">2012</option>
-						<option value="2011">2011</option>
-						<option value="2010">2010</option>
-						<option value="4009">4009</option>
-						<option value="4008">4008</option>
-						<option value="4007">4007</option>
-						<option value="4006">4006</option>
-						<option value="4005">4005</option>
-						<option value="4004">4004</option>
-						<option value="4003">4003</option>
-						<option value="4002">4002</option>
-						<option value="4001">4001</option>
-						<option value="4000">4000</option>
-						<option value="1999">1999</option>
-						<option value="1998">1998</option>
-						<option value="1997">1997</option>
-						<option value="1996">1996</option>
-						<option value="1995">1995</option>
-						<option value="1994">1994</option>
-						<option value="1993">1993</option>
-						<option value="1992">1992</option>
-						<option value="1991">1991</option>
-						<option value="1990">1990</option>
-						</select>
-						</td></tr>
+				<tr><td width ="400">Date Of Admission</td><td><input type ="date" size ="20" name="doa" value="<?php echo $doa;?>" placeholder="yyyy/mm/dd" required></td></tr>
 				<tr><td width ="400">Branch</td><td>
 				<select name="branch">
 					<option></option>
@@ -786,10 +504,10 @@ if($_POST )
 		<h3>Guardians Details</h3><hr><br>
 		
 			<table>
-				<tr><td width ="400">Name</td><td><input type="text" size="20" name="gname" value="<?php echo $gname;?>"></td><td><p><?php echo $gnameErr;?></p></td></tr>
+				<tr><td width ="400">Name</td><td><input type="text" size="20" name="gname" value="<?php echo $gname;?>" required></td><td></td></tr>
 				<tr><td width ="400">Occupation</td><td><input type="text" size="20" name="gocc" value="<?php echo $gocc;?>"></td></tr>
-				<tr><td width ="400">Email</td><td><input type="text" size="20" name="gemail" value="<?php echo $gemail;?>"></td><td><p><?php echo $gemailErr;?></p></td><tr>
-				<tr><td width ="400">Phone no</td><td><input type="text" size="20" name="gpho" value="<?php echo $gpho;?>"></td><td><p><?php echo $gphoErr;?></p></td><tr>
+				<tr><td width ="400">Email</td><td><input type="email" size="20" name="gemail" value="<?php echo $gemail;?>" required></td><td></td><tr>
+				<tr><td width ="400">Phone no</td><td><input type="text" size="20" name="gpho" value="<?php echo $gpho;?>"></td><td></td><tr>
 				<tr><td width ="400">Relation</td><td><input type="text" size="20" name="relation" value="<?php echo $grel;?>"></td><tr>
 			</table>
 		
@@ -823,12 +541,12 @@ if($_POST )
 				<tr><td width ="400">Percentage</td><td><input type="text" size="20" name="percentage" value="<?php echo $percentage;?>"></td></tr>
 				<tr><td width ="400">Year of Pass</td><td><input type="text" size="20"name="yop" value="<?php echo $yop;?>"></td></tr>
 			</table><br></br>
-                                 <div align="center"><input formmethod="post" type="submit" name="submit"  value="&check;" id="but_sub"></div>
+                                 <div align="center"><input type="submit" name="submit"  value="&check;" id="but_sub"></div>
 		</form>
 	</div>
 	
 	<div id="footer">
-		Copyright 2013 Model Engineering College, Thrikkakara &copy;
+		Copyright 4008 Model Engineering College, Thrikkakara &copy;
 	</div>
 <style>
 p{
