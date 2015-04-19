@@ -162,7 +162,7 @@ if($_POST)
    if($flag==0)
     {       
 
-	header("Location: http://127.1.1/db.php");exit();
+	header("Location: db.php");exit();
     }
   }
 

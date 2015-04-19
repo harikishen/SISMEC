@@ -1,7 +1,8 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "turbodrive111";
-$dbname = "harikishen";
-
+$password = "iamahaxor";
+//$password = "turbodrive111";
+$dbname = "sismec_local_haxorware";
+//$dbname = "harikishen";
 ?>
