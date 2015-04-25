@@ -3,6 +3,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="date.js"></script>
+<script src="check.js"></script>
 <link rel="stylesheet" type="text/css" href="add.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 </head>
@@ -162,7 +163,7 @@ if($_POST)
    if($flag==0)
     {       
 
-	header("Location: db.php");exit();
+	header("Location: http://127.1.1/db.php");exit();
     }
   }
 
@@ -179,7 +180,7 @@ if($_POST)
 		<h3>Student Details</h3><hr><br>
 		<form name="form1"  method="post" action="add.php" id="form1" >
 			<table>
-				<tr><td width ="400">Admission No</td><td><input type ="text" name="admno" value="<?php echo $admno;?>" size="20" required></td><td><p><?php echo $admErr;?></p></td></tr>
+				<tr><td width ="400">Admission No</td><td><input type ="text" name="admno" id="admno" value="<?php echo $admno;?>" size="20" onchange="test()" required></td><td><p><?php echo $admErr;?></p></td></tr>
 				<tr><td width ="400">Roll No</td><td><input type ="text" name="roll" value="<?php echo $roll;?>" size ="20" required></td><td></td></tr>
                                 <tr><td width ="400">Name</td><td><input type ="text" name="name" value="<?php echo $name;?>" size="20" required></td><td></td></tr>
 				<tr><td width ="400">Class</td><td>

@@ -14,7 +14,7 @@ if ($result->num_rows > 0) {
     	   $admno=$row["admission_no"];
 	}
 } else {
-      header("Location:notfound.php");exit();
+      header("Location:http://127.1.1/notfound.php");exit();
     }
 
 $sql = "DELETE FROM addresses WHERE admission_id='$admno'";
