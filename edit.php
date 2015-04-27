@@ -26,6 +26,14 @@ $semailErr=$fnameErr=$femailErr="";
 $fphoErr=$mnameErr=$memailErr="";
 $mphoErr=$gnameErr=$gemailErr="";
 $gphoErr=$rankErr="";
+session_start();
+if($_SESSION["edit"]!=1)
+  die("Access Denied");
+else
+ {
+  $_SESSION["edit"]=0;
+  session_write_close();
+}
 
 require_once 'dbconnect.php';
 $r=$_GET["sroll"];
@@ -36,7 +44,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM admissions WHERE admission_no='$r'";
+$sql = "SELECT * FROM admissions WHERE rollno='$r'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

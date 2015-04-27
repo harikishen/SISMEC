@@ -3,7 +3,18 @@
 <link rel="stylesheet" type="text/css" href="add.css">
 </head>
 <?php
-if($_POST){
+session_start();
+if($_SESSION["view"]!=1)
+{
+ 
+ die("Access Denied");
+}
+else
+ {
+ $_SESSION["view"]=0;
+ session_write_close();
+}
+if($_GET){
 $flag=1;
 $admno=$roll=$name=$class=$sem="";
 $admErr=$rollErr=$nameErr="";
@@ -23,7 +34,7 @@ $fphoErr=$mnameErr=$memailErr="";
 $mphoErr=$gnameErr=$gemailErr="";
 $gphoErr=$rankErr="";
 require_once 'dbconnect.php';  
-$r=$_POST["sroll"];
+$r=$_GET["sroll"];
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
@@ -31,7 +42,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM admissions WHERE admission_no='$r'";
+$sql = "SELECT * FROM admissions WHERE rollno='$r'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
